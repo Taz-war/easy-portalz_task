@@ -1,35 +1,18 @@
-import { Box, Button, Chip, Container, Grid, IconButton, Paper } from "@mui/material";
+import { Box, Button, Chip, Collapse, Container, Grid, IconButton, Paper } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Structures from "../../Components/Structures/Structures";
-// import ShowStructure from "../../Components/ShowStructure/ShowStructure";
+import CloseIcon from '@mui/icons-material/Close';
+import ShowStructure from "../../Components/ShowStructure/ShowStructure";
 const SectionBuilder = () => {
   const [componentsToRender, setComponentsToRender] = useState([]);
   const [openStructures,setOperStructures] = useState(false)
 
-  const ShowStructure = () => {
-    const [numberOfStructures,setNumberOfStructures] =useState(['12','6,6','4,4,4','3,3,3,3','3,9','9,3','3,3,6','6,3,3','3,6,3','2,8,2','2,2,2,2,2,2'])
-  return (
-    <Container>
-        <Grid container columns={12} spacing={3} mb={1}>
-        {numberOfStructures.map((item,index)=>{
-           return (
-            <Grid item md={2}>
-            {/* <Paper sx={{border:'1px solid black',borderWidth:'thin'}} onClick={()=>addComponent(item)}>{item}</Paper> */}
-            <Chip label={`Structure ${item}`} variant="outlined" onClick={()=>addComponent(item)}/>
-           </Grid>
-           )
-        })}
-        </Grid>
-    </Container>
-  )
-}
-
   const addComponent = (item) => {
-    console.log(item)
+    setOperStructures(false)
     setComponentsToRender((prev) => [
       ...prev,
       <Structures
@@ -51,7 +34,8 @@ const SectionBuilder = () => {
           borderWidth: "thin",
         }}
       >
-        {openStructures && <ShowStructure />}
+        {/* {openStructures && <ShowStructure />} */}
+        <Collapse in={openStructures === false}>
         <Grid container justify="center" spacing={3}>
           <Grid item>
             <Paper>
@@ -75,6 +59,15 @@ const SectionBuilder = () => {
             </Paper>
           </Grid>
         </Grid>
+        </Collapse>
+        <Collapse in={openStructures}>
+          <Box textAlign={'right'}>
+            <IconButton onClick={()=>setOperStructures(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <ShowStructure addComponent={addComponent}/>
+        </Collapse>
       </Paper>
     </Container>
   );

@@ -1,21 +1,21 @@
-import { Container, Grid, Paper, Typography } from '@mui/material'
+import { Chip, Container, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { useState } from 'react'
 
-const ShowStructure = () => {
-    const [numberOfStructures,setNumberOfStructures] =useState(['1','2','3','4'])
+const ShowStructure = ({addComponent}) => {
+  const [numberOfStructures,setNumberOfStructures] =useState(['12','6,6','4,4,4','3,3,3,3','3,9','9,3','3,3,6','6,3,3','3,6,3','2,8,2','2,2,2,2,2,2'])
   return (
-    <Container>
-        <Grid container columns={12} spacing={3} m={2}>
+  
+        <Grid container columns={12} spacing={3} mb={1}>
         {numberOfStructures.map((item,index)=>{
            return (
             <Grid item md={2}>
-            <Paper sx={{border:'1px solid black',borderWidth:'thin'}}>{item}</Paper>
+            <Chip label={`Structure ${item}`} variant="outlined" onClick={()=>addComponent(item)}/>
            </Grid>
            )
         })}
         </Grid>
-    </Container>
+    
   )
 }
 
